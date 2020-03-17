@@ -35,6 +35,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql PostgreSQL DRIVER -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.11</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -45,5 +52,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
