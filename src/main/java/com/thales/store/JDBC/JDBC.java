@@ -1,4 +1,4 @@
-package com.thales.store.jdbc;
+package com.thales.store.JDBC;
 
 import java.sql.*;
 
