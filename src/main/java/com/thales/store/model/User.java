@@ -15,6 +15,14 @@ public class User {
 
     private ArrayList<String> roles;
 
+    public User(int userId, String email, String login, String address, ArrayList<String> roles) {
+        this.userId = userId;
+        this.email = email;
+        this.login = login;
+        this.address = address;
+        this.roles = roles;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -65,7 +73,7 @@ public class User {
                 ", roles=" + roles +
                 '}';
     }
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(getUserId(), getEmail(), getLogin(), getAddress(), getRoles());
