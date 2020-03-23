@@ -13,14 +13,17 @@ public class JDBC {
     public static void main(String[] args) {
 
         try {
+
             Connection conn = DriverManager.getConnection(host, uName, uPass);
             if (conn != null) System.out.println("Connected");
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SELECT_QUERY);
-            Printer printer = new Printer();
-            printer.printResultSet(rs);
+            new Printer(rs);
+
         } catch (SQLException e) {
+
             e.printStackTrace();
+
         }
     }
 }
