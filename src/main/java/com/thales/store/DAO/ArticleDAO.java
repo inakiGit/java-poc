@@ -6,5 +6,4 @@ public interface ArticleDAO {
 
     public void insert(Article article);
     public Article findByName(int articleName);
-    
 }

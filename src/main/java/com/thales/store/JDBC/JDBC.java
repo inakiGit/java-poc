@@ -17,6 +17,8 @@ public class JDBC {
             if (conn != null) System.out.println("Connected");
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(SELECT_QUERY);
+            Printer printer = new Printer();
+            printer.printResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
         }
