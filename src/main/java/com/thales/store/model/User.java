@@ -1,6 +1,5 @@
 package com.thales.store.model;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class User {
@@ -13,14 +12,11 @@ public class User {
 
     private String address;
 
-    private ArrayList<String> roles;
-
-    public User(int userId, String email, String login, String address, ArrayList<String> roles) {
-        this.userId = userId;
+    public User(int userId, String email, String login, String address) {
+        this.userId = userId
         this.email = email;
         this.login = login;
         this.address = address;
-        this.roles = roles;
     }
 
     public int getUserId() {
@@ -55,13 +51,6 @@ public class User {
         this.address = address;
     }
 
-    public ArrayList<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(ArrayList<String> roles) {
-        this.roles = roles;
-    }
 
     @Override
     public String toString() {
@@ -69,13 +58,12 @@ public class User {
                 "userId=" + userId +
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
-                ", address='" + address + '\'' +
-                ", roles=" + roles +
+                ", address='" + address +
                 '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getEmail(), getLogin(), getAddress(), getRoles());
+        return Objects.hash(getUserId(), getEmail(), getLogin(), getAddress();
     }
 }
