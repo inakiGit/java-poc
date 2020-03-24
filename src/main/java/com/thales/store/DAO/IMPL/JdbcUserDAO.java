@@ -53,7 +53,6 @@ public class JdbcUserDAO implements UserDAO {
                 Connection conn = DriverManager.getConnection(host, uName, uPass);
                 PreparedStatement ps = conn.prepareStatement(sqlRequest)
         ) {
-            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -91,7 +90,6 @@ public class JdbcUserDAO implements UserDAO {
                 User user = new User(userId, email, login, address);
                 userList.add(user);
             }
-            userList.forEach(u -> System.out.println(u));
 
         } catch (SQLException e) {
             System.err.format("SQL state: %s\n%s", e.getSQLState(), e.getMessage());
