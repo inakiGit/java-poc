@@ -46,16 +46,16 @@ public class JdbcUserDAO implements UserDAO {
     public User GetById(int id) {
 
         String sqlRequest = String.format("SELECT * FROM USERS WHERE userid=%s", id);
+
         User user = null;
 
         try (
                 Connection conn = DriverManager.getConnection(host, uName, uPass);
                 PreparedStatement ps = conn.prepareStatement(sqlRequest)
         ) {
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
                 user = new User(
                         rs.getInt("userid"),
@@ -73,17 +73,15 @@ public class JdbcUserDAO implements UserDAO {
 
     public List<User> GetAll(){
 
-        List<User> userList = new ArrayList<>();
-
         String sqlRequest = "SELECT * FROM users";
+
+        List<User> userList = new ArrayList<>();
 
         try (
                 Connection conn = DriverManager.getConnection(host, uName, uPass);
                 PreparedStatement ps = conn.prepareStatement(sqlRequest)
         ) {
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 int userId = rs.getInt("userid");
                 String email = rs.getString("email");
