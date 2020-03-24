@@ -43,7 +43,7 @@ public class JdbcUserDAO implements UserDAO {
         }
     }
 
-    public User GetById(int id) {
+    public User findById(int id) {
 
         String sqlRequest = String.format("SELECT * FROM USERS WHERE userid=%s", id);
 
@@ -70,7 +70,7 @@ public class JdbcUserDAO implements UserDAO {
         return user;
     }
 
-    public List<User> GetAll(){
+    public List<User> findAll(){
 
         String sqlRequest = "SELECT * FROM users";
 

@@ -8,8 +8,8 @@ public interface UserDAO {
 
     public void insert(User user);
 
-    public User GetById(int userId);
+    public User findById(int userId);
 
-    public List<User> GetAll();
+    public List<User> findAll();
 
 }
