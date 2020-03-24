@@ -43,7 +43,7 @@ public class JdbcUserDAO implements UserDAO {
         }
     }
 
-    public User findById(int id) {
+    public User GetById(int id) {
 
         String sqlRequest = String.format("SELECT * FROM USERS WHERE userid=%s", id);
 
@@ -81,7 +81,7 @@ public class JdbcUserDAO implements UserDAO {
         }
     }
 
-    public List<User> findAll(){
+    public List<User> GetAll(){
 
         List<User> userList = new ArrayList<>();
 
@@ -101,7 +101,7 @@ public class JdbcUserDAO implements UserDAO {
                 userList.add(user);
             }
             userList.forEach(u -> System.out.println(u));
-            
+
         } catch (SQLException e) {
             System.err.format("SQL state: %s\n%s", e.getSQLState(), e.getMessage());
         }

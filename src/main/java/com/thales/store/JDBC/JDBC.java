@@ -6,6 +6,8 @@ The DRIVER implements the interfaces defined in the java.sql package
 
 package com.thales.store.JDBC;
 
+import com.thales.store.DAO.IMPL.JdbcUserDAO;
+
 import java.sql.*;
 
 public class JDBC {
@@ -30,7 +32,6 @@ public class JDBC {
         } catch (SQLException e) {
 
             e.printStackTrace();
-
         }
     }
 }
