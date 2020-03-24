@@ -2,7 +2,6 @@ package com.thales.store.DAO.IMPL;
 
 import com.thales.store.DAO.UserDAO;
 import com.thales.store.model.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,22 +14,18 @@ public class JdbcUserDAO implements UserDAO {
 
     public void insertOne(User user) {
 
-        String sqlRequestValues ="(userID, email, login, address) VALUES (%s, %s, %s, %s)";
+        String sqlRequestValues =" (userid, email, login, address) VALUES ('%d', '%s', '%s', '%s')";
         String sqlRequest = "INSERT INTO USERS" +
                 String.format(sqlRequestValues, user.getUserId(), user.getEmail(), user.getLogin(), user.getAddress());
 
         try (
                 Connection conn = DriverManager.getConnection(host, uName, uPass);
                 PreparedStatement ps = conn.prepareStatement(sqlRequest)
-        ){
-            ps.setInt(1, user.getUserId());
-            ps.setString(2, user.getEmail());
-            ps.setString(3, user.getLogin());
-            ps.setString(4, user.getAddress());
-            ps.executeUpdate();
+        ) {
+            ps.executeQuery();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.err.format("SQL state: %s\n%s", e.getSQLState(), e.getMessage());
         }
     }
 
@@ -90,6 +85,7 @@ public class JdbcUserDAO implements UserDAO {
     public void deleteOneById(int userId) {
 
         String sqlRequest = String.format("DELETE FROM users WHERE userid=%s", userId);
+
         try (
                 Connection conn = DriverManager.getConnection(host, uName, uPass);
                 PreparedStatement ps = conn.prepareStatement(sqlRequest)
