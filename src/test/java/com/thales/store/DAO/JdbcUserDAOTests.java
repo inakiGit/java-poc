@@ -10,7 +10,5 @@ public class JdbcUserDAOTests {
 
     @Test
     void findByIdTest() {
-        boolean x = true;
-        Assert.isTrue(true, "hello");
     }
 }
