@@ -82,12 +82,12 @@ public class JdbcUserDAO implements UserDAO {
         ) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int userId = rs.getInt("userid");
-                String email = rs.getString("email");
-                String login = rs.getString("login");
-                String address = rs.getString("address");
-
-                User user = new User(userId, email, login, address);
+                User user = new User(
+                        rs.getInt("userid"),
+                        rs.getString("email"),
+                        rs.getString("login"),
+                        rs.getString("address")
+                );
                 userList.add(user);
             }
 
