@@ -88,7 +88,6 @@ public class JdbcUserDAO implements UserDAO {
     }
 
     public void deleteOneById(int userId) {
-
         String sqlRequest = String.format("DELETE FROM users WHERE userid=%s", userId);
         connectAndExecuteQuery(sqlRequest);
     }
