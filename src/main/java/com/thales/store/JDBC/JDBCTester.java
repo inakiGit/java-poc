@@ -13,10 +13,8 @@ import java.util.List;
 public class JDBCTester {
 
     public static void main(String[] args) {
-        List<User> u = new ArrayList<User>();
         JdbcUserDAO x = new JdbcUserDAO();
-        User user = x.GetById(1);
-        u.add(user);
+        List u = x.GetAll();
         u.forEach((y -> System.out.println(y)));
     }
 }
