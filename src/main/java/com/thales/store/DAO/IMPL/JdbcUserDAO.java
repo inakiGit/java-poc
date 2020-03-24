@@ -3,7 +3,6 @@ package com.thales.store.DAO.IMPL;
 import com.thales.store.DAO.UserDAO;
 import com.thales.store.model.User;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,29 +13,21 @@ public class JdbcUserDAO implements UserDAO {
     private static final String uName = "postgres";
     private static final String uPass = "caudillo";
 
-    private DataSource dataSource;
-
-    public void SetDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     public void insert(User user) {
+
+        String sqlRequestValues ="(userID, email, login, address) VALUES (1, a, b, c)";
         String sqlRequest = "INSERT INTO USERS" +
-                "(userID, email, login, address) VALUES (1, a, b, c)";
+                String.format(sqlRequestValues, user.getUserId(), user);
 
-        //String sqlRequest = "SELECT * FROM USERS";
-
-        Connection conn;
-
-        try {
-            conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sqlRequest);
+        try (
+                Connection conn = DriverManager.getConnection(host, uName, uPass);
+                PreparedStatement ps = conn.prepareStatement(sqlRequest)
+        ){
             ps.setInt(1, user.getUserId());
             ps.setString(2, user.getEmail());
             ps.setString(3, user.getLogin());
             ps.setString(4, user.getAddress());
             ps.executeUpdate();
-            ps.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -54,7 +45,6 @@ public class JdbcUserDAO implements UserDAO {
                 PreparedStatement ps = conn.prepareStatement(sqlRequest)
         ) {
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 user = new User(
                         rs.getInt("userid"),
