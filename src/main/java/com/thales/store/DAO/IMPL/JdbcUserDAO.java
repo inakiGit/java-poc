@@ -5,8 +5,14 @@ import com.thales.store.model.User;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JdbcUserDAO implements UserDAO {
+
+    private static final String host = "jdbc:postgresql://localhost:5432/postgres";
+    private static final String uName = "postgres";
+    private static final String uPass = "caudillo";
 
     private DataSource dataSource;
 
@@ -20,7 +26,7 @@ public class JdbcUserDAO implements UserDAO {
 
         //String sqlRequest = "SELECT * FROM USERS";
 
-        Connection conn = null;
+        Connection conn;
 
         try {
             conn = dataSource.getConnection();
@@ -73,6 +79,33 @@ public class JdbcUserDAO implements UserDAO {
             }
 
         }
+    }
+
+    public List<User> findAll(){
+
+        List<User> userList = new ArrayList<>();
+
+        String sqlResult = "SELECT * FROM users";
+
+        try (Connection conn = DriverManager.getConnection(host, uName, uPass);
+            PreparedStatement ps = conn.prepareStatement(sqlResult)) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int userId = rs.getInt("userid");
+                String email = rs.getString("email");
+                String login = rs.getString("login");
+                String address = rs.getString("address");
+
+                User user = new User(userId, email, login, address);
+                userList.add(user);
+            }
+            userList.forEach(u -> System.out.println(u));
+            
+        } catch (SQLException e) {
+            System.err.format("SQL state: %s\n%s", e.getSQLState(), e.getMessage());
+        }
+        return userList;
     }
 }
 
