@@ -12,21 +12,26 @@ public class JdbcUserDAO implements UserDAO {
     private static final String uName = "postgres";
     private static final String uPass = "caudillo";
 
-    public void insertOne(User user) {
-
-        String sqlRequestValues =" (userid, email, login, address) VALUES ('%d', '%s', '%s', '%s')";
-        String sqlRequest = "INSERT INTO USERS" +
-                String.format(sqlRequestValues, user.getUserId(), user.getEmail(), user.getLogin(), user.getAddress());
+    private void connectAndExecuteQuery(String query) {
 
         try (
                 Connection conn = DriverManager.getConnection(host, uName, uPass);
-                PreparedStatement ps = conn.prepareStatement(sqlRequest)
+                PreparedStatement ps = conn.prepareStatement(query)
         ) {
             ps.executeQuery();
 
         } catch (SQLException e) {
             System.err.format("SQL state: %s\n%s", e.getSQLState(), e.getMessage());
         }
+    }
+
+    public void insertOne(User user) {
+
+        String sqlRequestValues =" (userid, email, login, address) VALUES ('%d', '%s', '%s', '%s')";
+        String sqlRequest = "INSERT INTO USERS" +
+                String.format(sqlRequestValues, user.getUserId(), user.getEmail(), user.getLogin(), user.getAddress());
+
+        connectAndExecuteQuery(sqlRequest);
     }
 
     public User findOneById(int userIid) {
@@ -85,16 +90,6 @@ public class JdbcUserDAO implements UserDAO {
     public void deleteOneById(int userId) {
 
         String sqlRequest = String.format("DELETE FROM users WHERE userid=%s", userId);
-
-        try (
-                Connection conn = DriverManager.getConnection(host, uName, uPass);
-                PreparedStatement ps = conn.prepareStatement(sqlRequest)
-        ) {
-
-            ps.executeQuery();
-
-        } catch (SQLException e) {
-            System.err.format("SQL state: %s\n%s", e.getSQLState(), e.getMessage());
-        }
+        connectAndExecuteQuery(sqlRequest);
     }
 }
