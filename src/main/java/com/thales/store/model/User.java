@@ -13,7 +13,7 @@ public class User {
     private String address;
 
     public User(int userId, String email, String login, String address) {
-        this.userId = userId
+        this.userId = userId;
         this.email = email;
         this.login = login;
         this.address = address;
@@ -64,6 +64,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getEmail(), getLogin(), getAddress();
+        return Objects.hash(getUserId(), getEmail(), getLogin(), getAddress());
     }
 }

@@ -37,7 +37,7 @@ public class JdbcUserDAO implements UserDAO {
         }
     }
 
-    public User findById(int id){
+    public User findById(int id) {
 
         String sqlRequest = String.format("SELECT * FROM USERS WHERE userid=%s", id);
 
@@ -65,6 +65,7 @@ public class JdbcUserDAO implements UserDAO {
             throw new RuntimeException(e);
 
         } finally {
+
             if (conn != null) {
                 try {
                     conn.close();
