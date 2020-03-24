@@ -46,14 +46,15 @@ public class JdbcUserDAO implements UserDAO {
     public User GetById(int id) {
 
         String sqlRequest = String.format("SELECT * FROM USERS WHERE userid=%s", id);
+        User user = null;
 
-        Connection conn = null;
+        try (
+                Connection conn = DriverManager.getConnection(host, uName, uPass);
+                PreparedStatement ps = conn.prepareStatement(sqlRequest)
+        ) {
 
-        try {
-            conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sqlRequest);
             ps.setInt(1, id);
-            User user = null;
+
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 user = new User(
@@ -63,32 +64,24 @@ public class JdbcUserDAO implements UserDAO {
                         rs.getString("address")
                 );
             }
-            rs.close();
-            rs.close();
-            return user;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-
-        } finally {
-
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e ) {}
-            }
-
+            System.err.format("SQL state: %s\n%s", e.getSQLState(), e.getMessage());
         }
+        return user;
     }
 
     public List<User> GetAll(){
 
         List<User> userList = new ArrayList<>();
 
-        String sqlResult = "SELECT * FROM users";
+        String sqlRequest = "SELECT * FROM users";
 
-        try (Connection conn = DriverManager.getConnection(host, uName, uPass);
-            PreparedStatement ps = conn.prepareStatement(sqlResult)) {
+        try (
+                Connection conn = DriverManager.getConnection(host, uName, uPass);
+                PreparedStatement ps = conn.prepareStatement(sqlRequest)
+        ) {
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -108,6 +101,3 @@ public class JdbcUserDAO implements UserDAO {
         return userList;
     }
 }
-
-
-
