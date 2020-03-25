@@ -21,7 +21,7 @@ public class JdbcUserDAO implements UserDAO {
         this.pass = pass;
     }
 
-    private void connectAndExecuteQuery(String query) {
+    public void connectAndExecuteQuery(String query) {
 
         try (
                 Connection conn = DriverManager.getConnection(this.host, this.name, this.pass);
