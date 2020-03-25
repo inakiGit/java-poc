@@ -1,7 +1,6 @@
 package com.thales.store.DAO.IMPL;
 
 import com.thales.store.DAO.UserDAO;
-import com.thales.store.JDBC.Database;
 import com.thales.store.model.User;
 
 import java.sql.*;
@@ -10,11 +9,22 @@ import java.util.List;
 
 public class JdbcUserDAO implements UserDAO {
 
+    private String host;
 
-    private void connectAndExecuteQuery(String query, Database dbConf) {
+    private String name;
+
+    private String pass;
+
+    public JdbcUserDAO(String host, String name, String pass) {
+        this.host = host;
+        this.name = name;
+        this.pass = pass;
+    }
+
+    private void connectAndExecuteQuery(String query) {
 
         try (
-                Connection conn = DriverManager.getConnection(dbConf.getHost(), dbConf.getName(), dbConf.getPass());
+                Connection conn = DriverManager.getConnection(this.host, this.name, this.pass);
                 PreparedStatement ps = conn.prepareStatement(query)
         ) {
             ps.executeQuery();
@@ -25,23 +35,23 @@ public class JdbcUserDAO implements UserDAO {
         }
     }
 
-    public void insertOne(User user, Database dbConf) {
+    public void insertOne(User user) {
 
         String sqlRequestValues =" (userid, email, login, address) VALUES ('%d', '%s', '%s', '%s')";
         String sqlRequest = "INSERT INTO USERS" +
                 String.format(sqlRequestValues, user.getUserId(), user.getEmail(), user.getLogin(), user.getAddress());
 
-        connectAndExecuteQuery(sqlRequest, dbConf);
+        connectAndExecuteQuery(sqlRequest);
     }
 
-    public User findOneById(int userIid, Database dbConf) {
+    public User findOneById(int userIid) {
 
         String sqlRequest = String.format("SELECT * FROM USERS WHERE userid=%s", userIid);
 
         User user = null;
 
         try (
-                Connection conn = DriverManager.getConnection(dbConf.getHost(), dbConf.getName(), dbConf.getPass());
+                Connection conn = DriverManager.getConnection(this.host, this.name, this.pass);
                 PreparedStatement ps = conn.prepareStatement(sqlRequest)
         ) {
             ResultSet rs = ps.executeQuery();
@@ -61,14 +71,14 @@ public class JdbcUserDAO implements UserDAO {
         return user;
     }
 
-    public List<User> findAll(Database dbConf){
+    public List<User> findAll(){
 
         String sqlRequest = "SELECT * FROM users";
 
         List<User> userList = new ArrayList<>();
 
         try (
-                Connection conn = DriverManager.getConnection(dbConf.getHost(), dbConf.getName(), dbConf.getPass());
+                Connection conn = DriverManager.getConnection(this.host, this.name, this.pass);
                 PreparedStatement ps = conn.prepareStatement(sqlRequest)
         ) {
             ResultSet rs = ps.executeQuery();
@@ -89,8 +99,8 @@ public class JdbcUserDAO implements UserDAO {
         return userList;
     }
 
-    public void deleteOneById(int userId, Database dbConf) {
+    public void deleteOneById(int userId) {
         String sqlRequest = String.format("DELETE FROM users WHERE userid=%s", userId);
-        connectAndExecuteQuery(sqlRequest, dbConf);
+        connectAndExecuteQuery(sqlRequest);
     }
 }

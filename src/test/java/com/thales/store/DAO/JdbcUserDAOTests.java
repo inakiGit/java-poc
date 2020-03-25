@@ -14,7 +14,7 @@ public class JdbcUserDAOTests {
     @Test
     void findAllTest() {
 
-        JdbcUserDAO accessObj = new JdbcUserDAO();
+        //JdbcUserDAO accessObj = new JdbcUserDAO();
         //List<User> result = accessObj.GetAll();
         //result.forEach((y -> System.out.println(y)));
     }
