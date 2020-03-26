@@ -1,22 +1,26 @@
 package com.thales.store.service;
 
 import com.thales.store.DAO.IMPL.JdbcUserDAO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    private static final String host = "jdbc:postgresql://localhost:5432/postgres";
+    @Value("${host}")
+    private String host;
 
-    private static final String name = "postgres";
+    @Value("${name}")
+    private String name;
 
-    private static final String pass = "caudillo";
+    @Value("${pass}")
+    private String pass;
 
     public String findOneById(int userId){
-        return new JdbcUserDAO(host, name, pass).findOneById(userId).toString();
+        return new JdbcUserDAO(this.host, this.name, this.pass).findOneById(userId).toString();
     }
 
     public String findAll(){
-        return new JdbcUserDAO(host, name, pass).findAll().toString();
+        return new JdbcUserDAO(this.host, this.name, this.pass).findAll().toString();
     }
 }
