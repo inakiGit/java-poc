@@ -41,7 +41,7 @@ public class JdbcUserDAOTests {
     @Test
     void findAllTest() {
 
-        setUpTestDb();
+        //setUpTestDb();
 
         //User user = new User(4, "email4", "login4", "addres4");
         //obj.insertOne(user);
