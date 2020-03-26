@@ -2,18 +2,27 @@ package com.thales.store.DAO.IMPL;
 
 import com.thales.store.DAO.UserDAO;
 import com.thales.store.model.User;
+import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JdbcUserDAO implements UserDAO {
+
+    private DataSource dataSource;
 
     private String host;
 
     private String name;
 
     private String pass;
+
+    public JdbcUserDAO(){
+
+    }
 
     public JdbcUserDAO(String host, String name, String pass) {
         this.host = host;
